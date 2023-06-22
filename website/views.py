@@ -35,6 +35,18 @@ def add_restaurante():
     return render_template('add_restaurante.html')
 
 
+@views.route('/delete-restaurante', methods=['POST'])
+def delete_restaurante():
+    restaurante = json.loads(request.data)
+    restauranteId = restaurante['patrimonioId']
+    restaurante = Restaurante.query.get(restauranteId)
+    if restaurante:
+        # if patrimonio.user_id == current_user.id:
+        db.session.delete(restaurante)
+        db.session.commit()
+    return jsonify({})
+
+
 @views.route('/restaurante/<int:restaurante_id>')
 def restaurante(restaurante_id):
     restaurante = Restaurante.query.get(restaurante_id)
