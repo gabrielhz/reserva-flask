@@ -1,0 +1,28 @@
+{% extends "base.html" %} {% block title %}Adicionar Restaurante{% endblock %}
+{% block content %}
+<form method="POST">
+  <h3 align="center">Adicionar</h3>
+  <div class="form-group">
+    <label for="nomeRestaurante">Nome</label>
+    <input
+      type="text"
+      class="form-control"
+      id="nomeRestaurante"
+      name="nomeRestaurante"
+      placeholder="Nome social"
+    />
+  </div>
+  <div class="form-group">
+    <label for="enderecoRestaurante">Endereço</label>
+    <input
+      type="text"
+      class="form-control"
+      id="enderecoRestaurante"
+      name="enderecoRestaurante"
+      placeholder="Maria Villac, 1380, Canasvieiras, Florianópolis, SC"
+    />
+  </div>
+  <br />
+  <button type="submit" class="btn btn-primary">Adicionar</button>
+</form>
+{% endblock %}
