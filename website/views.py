@@ -75,6 +75,18 @@ def restaurante(restaurante_id):
     return render_template("restaurante.html", restaurante=restaurante, mesas=mesas)
 
 
+@views.route('/deletar-mesa/<int:mesa_id>', methods=['GET', 'POST'])
+def deletar_mesa(mesa_id):
+    remover = request.form.get('remover')
+    mesa = Mesa.query.get(mesa_id)
+
+    if remover:
+        db.session.delete(mesa)
+        db.session.commit()
+
+    return redirect(url_for('views.restaurante', restaurante_id=mesa.restaurante_id))
+
+
 @views.route('/atualizar-mesa/<int:mesa_id>', methods=['GET', 'POST'])
 def atualizar_mesa(mesa_id):
     valor = request.form.get('valor')

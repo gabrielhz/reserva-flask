@@ -24,7 +24,9 @@ endblock %} {% block content %}
     data-popper-placement="bottom-end"
   >
     <form method="POST">
-      <li><h6 class="dropdown-header">Adicionar mesa</h6></li>
+      <li class="dropdown d-flex justify-content-center">
+        <h6 class="dropdown-header">Adicionar mesa</h6>
+      </li>
       <li>
         <div class="form-group">
           <input
@@ -37,7 +39,9 @@ endblock %} {% block content %}
         </div>
       </li>
       <li><hr class="dropdown-divider" /></li>
-      <li><button type="submit" class="btn btn-primary">Adicionar</button></li>
+      <li class="dropdown d-flex justify-content-center">
+        <button type="submit" class="btn btn-primary">Adicionar</button>
+      </li>
     </form>
   </ul>
 </div>
@@ -45,7 +49,7 @@ endblock %} {% block content %}
 <br />
 <div class="container d-flex justify-content-center align-items-start">
   <div class="row justify-content-center align-items-start">
-    {% for item in mesas %}
+    {% for item in mesas|sort(attribute='numero_mesa') %}
     <div class="col me-2">
       <div class="dropup">
         <button
@@ -125,8 +129,17 @@ endblock %} {% block content %}
                 ></button>
               </form>
             </li>
-            <li><hr class="dropdown-divider" /></li>
-            <li><a class="dropdown-item" href="#"></a></li>
+            <li>
+              <form
+                method="post"
+                action="{{ url_for('views.deletar_mesa', mesa_id=item.id) }}"
+              >
+                <input type="hidden" name="remover" value="1" />
+                <button type="submit" class="close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </form>
+            </li>
           </div>
         </ul>
       </div>
