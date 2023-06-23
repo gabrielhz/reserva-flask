@@ -1,2 +1,138 @@
-{% extends "base.html" %} {% block title %}#124123{% endblock %} {% block
-content %} {% endblock %}
+{% extends "base.html" %} {% block title %}{{ restaurante.nome_restaurante }} {%
+endblock %} {% block content %}
+
+<h1 align="center">Mesas</h1>
+<br />
+
+<div class="dropdown d-flex justify-content-center">
+  <button
+    class="btn btn-primary dropdown-toggle show"
+    type="button"
+    data-bs-toggle="dropdown"
+    aria-expanded="true"
+  >
+    Adicionar
+  </button>
+  <ul
+    class="dropdown-menu dropdown-menu-end"
+    style="
+      position: absolute;
+      inset: 0px 0px auto auto;
+      margin: 0px;
+      transform: translate(0px, 40px);
+    "
+    data-popper-placement="bottom-end"
+  >
+    <form method="POST">
+      <li><h6 class="dropdown-header">Adicionar mesa</h6></li>
+      <li>
+        <div class="form-group">
+          <input
+            type="text"
+            class="form-control"
+            id="numeroMesa"
+            name="numeroMesa"
+            placeholder="Numero"
+          />
+        </div>
+      </li>
+      <li><hr class="dropdown-divider" /></li>
+      <li><button type="submit" class="btn btn-primary">Adicionar</button></li>
+    </form>
+  </ul>
+</div>
+
+<br />
+<div class="container d-flex justify-content-center align-items-start">
+  <div class="row justify-content-center align-items-start">
+    {% for item in mesas %}
+    <div class="col me-2">
+      <div class="dropup">
+        <button
+          {%
+          if
+          not
+          item.ocupado
+          and
+          not
+          item.reserva
+          %}
+          class="btn btn-light dropdown-toggle"
+          {%
+          elif
+          item.ocupado
+          %}
+          class="btn btn-danger dropdown-toggle"
+          {%
+          elif
+          item.reserva
+          %}
+          class="btn btn-warning dropdown-toggle"
+          {%
+          endif
+          %}
+          type="button"
+          data-bs-toggle="dropdown"
+          aria-expanded="false"
+        >
+          {{ item.numero_mesa }}
+        </button>
+        <ul class="dropdown-menu" style="">
+          <div class="d-flex justify-content-center">
+            <li><h6 class="dropdown-header">Ações</h6></li>
+            <li>
+              <form
+                method="post"
+                action="{{ url_for('views.atualizar_mesa', mesa_id=item.id) }}"
+              >
+                <input type="hidden" name="valor" value="2" />
+                <button
+                  type="submit"
+                  class="btn btn-danger rounded-circle"
+                  data-bs-toggle="tooltip"
+                  data-bs-placement="top"
+                  data-bs-original-title="Ocupado"
+                ></button>
+              </form>
+            </li>
+            <li>
+              <form
+                method="post"
+                action="{{ url_for('views.atualizar_mesa', mesa_id=item.id) }}"
+              >
+                <input type="hidden" name="valor" value="3" />
+                <button
+                  type="submit"
+                  class="btn btn-warning rounded-circle"
+                  data-bs-toggle="tooltip"
+                  data-bs-placement="top"
+                  data-bs-original-title="Reservado"
+                ></button>
+              </form>
+            </li>
+            <li>
+              <form
+                method="post"
+                action="{{ url_for('views.atualizar_mesa', mesa_id=item.id) }}"
+              >
+                <input type="hidden" name="valor" value="1" />
+                <button
+                  type="submit"
+                  class="btn btn-secondary rounded-circle"
+                  data-bs-toggle="tooltip"
+                  data-bs-placement="top"
+                  data-bs-original-title="Ocupado"
+                ></button>
+              </form>
+            </li>
+            <li><hr class="dropdown-divider" /></li>
+            <li><a class="dropdown-item" href="#"></a></li>
+          </div>
+        </ul>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+</div>
+
+{% endblock %}
